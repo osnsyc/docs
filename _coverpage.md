@@ -2,7 +2,7 @@
 
 笔记 | 备忘 | 杂物
 
-[<i class="iconfont icon-github"></i> GitHub](https://github.com/tinajs/tina)
+[<i class="iconfont icon-github"></i> GitHub](https://github.com/osnsyc/docs)
 [马上开始 <i class="iconfont icon-down"></i>](#main)
 
 <!-- background image -->

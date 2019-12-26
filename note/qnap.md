@@ -183,6 +183,22 @@ docker run -d \
 
 ### 应用商店NextCloud
 
+#### 安装步骤简述如下：
+
+- 手动安装nextcloud.qpkg与Qapache
+
+- 开启qapache与NextCloud应用
+
+- 填写管理员并配置数据库
+
+- > 选择使用 NAS 宿主机的 SQL 服务，可以方便的使用 phpMyAdmin 来管理。NAS 上 MySQL 服务端口在 应用服务 设置栏可以找到
+
+#### 安全及设置警告
+
+在 `用户名 - 管理 - 概览`  下运行安全检查，并作相应的设置
+
+![image-20191226172011934](qnap.assets/image-20191226172011934.png)
+
 
 
 ### 使用Docker安装NextCloud
