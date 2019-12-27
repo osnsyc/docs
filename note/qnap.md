@@ -57,7 +57,21 @@ export PATH=/opt/bin:$PATH
 
 
 
-## 使用阿里云DDNS
+## 阿里云DDNS
+
+**0.获取公网ip & 映射端口**
+
+- 我的宽带由电信提供，自带公网ip（如无公网ip打10000（电信）转人工服务索取）；
+- 我的光猫型号为**华为EchoLife HS 8145C**，可直接由光猫背面的普通用户账户登陆修改光猫为桥接模式；
+- 光猫**lan**口接入路由**wan**口，登陆路由设置pppoe拨号（账号密码可在电信宽带管家公众号获取和修改）；
+- 路由控制台开启Upnp，并可手动设置ssh等端口号。
+
+**注：**
+
+- 判断是否为公网ip：连接光猫的无线或将电脑接入猫的lan口，登入光猫管理界面查看wan口ip是否为公网ip；或用路由拨号后登入路由控制台查看wan口ip；
+- 若光猫无法设置桥接模式，需**超级管理员**账号登入可获取，账号密码可拨运营商服务号转人工服务查询（*但我打了好几次都说无法查到=。=*）；
+- 若可获得超级管理员账号，可由光猫拨号，路由设置为AP模式（此模式下猫lan口接路由lan口），并在光猫上设置路由的DMZ；
+- 路由拨号模式下，电信IPTV仍可正常工作。
 
 **1.在阿里云上申请一个域名，并做实名认证；**
 
@@ -73,7 +87,7 @@ export PATH=/opt/bin:$PATH
 
 ![image-20191226110151974](qnap.assets/image-20191226110151974.png)
 
-**4.在QNAP中启用ContainerStation，并SSH至NAS，输入下述两行代码：**
+**4.在QNAP中启用ContainerStation，并SSH至NAS，分别输入下述两串命令：**
 
 ```dockerfile
 docker pull chenhw2/aliyun-ddns-cli
@@ -88,11 +102,7 @@ docker run -d \
 
 [ALIYUN's AccessKey-ID]替换成自己的AccessKey，[ALIYUN's AccessKey-Secret]换成Access key Secret，ddns.aliyun.win换成完整域名。
 
-
-
 稍后即可使用www.domain.com 或 domain.com 加相应端口号访问自己的NAS了。
-
-
 
 **注：**
 
@@ -108,7 +118,7 @@ docker run -d \
 
 ## Webdav 的使用
 
-- ### Nextcloud在window 10资源管理器的挂载
+### 1. Nextcloud在window 10资源管理器的挂载
 
 > *从Windows Vista起，微软就禁用了http形式的基本WebDAV验证形式（KB841215），必须使用https连接，但是架设在AppFog上的免费账户对SSL证书无权限。所以在Windows Vista/7/8中，要方便地映射NextCloud文件为系统上的“网络位置”，就必须改注册表……*
 
@@ -137,7 +147,7 @@ docker run -d \
 > *HKLM\SYSTEM\CurrentControlSet\Services\WebClient\Parameters\FileSizeLimitInBytes*
 > *处的键值由 50000000 (50MB) 修改为更大的数值。最大修改为：4294967295（0xffffffff）字节，即4G。*
 
-- ### Linux挂载
+### 2. Linux挂载
 
 在Linux下可以使用 davfs2 挂载目录。
 
@@ -151,6 +161,12 @@ docker run -d \
 > sudo mount -t davfs http://192.168.2.230:81/remote.php/webdav ./webdav/
 > ```
 
+
+
+------
+
+
+
 ## 应用推荐
 
 > **Container Station**
@@ -161,9 +177,19 @@ docker run -d \
 >
 > **NextCloud**
 
+
+
+------
+
+
+
 ## Container Station：docker本地环境
 
 威联通上有一个 Container Station 的应用，可以直接用官方的 App Center 中下载安装，这其实就是一个 Docker 本地环境，如果[熟悉 Docker](https://blog.einverne.info/post/2017/07/docker-introduction.html) 使用，那么其实都直接可以 ssh 登录 NAS 然后完全使用命令行来操作。但威联通提供了一个直观的界面。
+
+
+
+------
 
 
 
@@ -175,13 +201,12 @@ docker run -d \
 
 ## NextCloud：个人云盘
 
-两种安装方式：
+### 1. 两种安装方式：
 
-> 应用商店的APP（付费）
->
-> Docker安装
+- 应用商店的APP（付费）
+- Docker安装
 
-### 应用商店NextCloud
+### 2. 应用商店NextCloud
 
 #### 安装步骤简述如下：
 
@@ -201,7 +226,143 @@ docker run -d \
 
 
 
-### 使用Docker安装NextCloud
+#### 添加信任域名
+
+编辑`/share/CACHEDEV1_DATA/.qpkg/NextCloud/nextcloud/config/config.php`文件，添加信任域名（局域网ip以及解析域名带端口号）：
+
+```php
+<?php
+$CONFIG = array (
+  'instanceid' => 'xxxxxxxx',
+  'passwordsalt' => 'xxxxxxxx',
+  'secret' => 'xxxxxxxx',
+  'trusted_domains' =>
+  array (
+    0 => '192.168.1.101:xxx',
+    1 => 'domain.com:xxx',
+    2 => 'www.domain.com:xxx',
+    3 => '192.168.2.1:xxx',
+  ),
+  'datadirfctory' => '/share/CACHEDEV1_DATA/.qpkg/NextCloud/nextcloud/data',
+  'dbtype' => 'mysql',
+  'version' => '17.0.1.1',
+  'overwrite.cli.url' => 'http://192.168.3.103:xxx',
+  'dbname' => 'nextcloud',
+  'dbhost' => 'localhost:xxxx',
+  'dbport' => '',
+  'dbtableprefix' => 'oc_',
+  'dbuser' => 'xxxxxxxxxx',
+  'dbpassword' => 'xxxxxxxxxxxx',
+  'installed' => true,
+  'maintenance' => false,
+);
+```
+
+#### 配置Qapache
+
+使用一段时间后发现NexctCloud占用内存极大，貌似无法正常释放内存，修改Qapache解决
+
+使用`find / -name 'http.conf'`找到NextCloud的配置文件（`/share/CACHEDEV1_DATA/.qpkg/NextCloud/httpd.conf`）做如下编辑：
+
+```json
+LoadModule mpm_prefork_module libexec/mod_mpm_prefork.so
+
+#一般linux默认使用的是prefork ，windows的是winnt。
+
+#Server-pool management (MPM specific)
+Include etc/extra/httpd-mpm.conf		
+
+#开启MPM模块
+```
+
+使用`find / -name 'http-mpm.conf'`找到Qapache的配置文件（`/share/CACHEDEV1_DATA/.qpkg/Qapache/etc/extra/httpd-mpm.conf`）做如下编辑：
+
+```json
+# prefork MPM
+# StartServers: number of server processes to start
+# MinSpareServers: minimum number of server processes which are kept spare
+# MaxSpareServers: maximum number of server processes which are kept spare
+# MaxRequestWorkers: maximum number of server processes allowed to start
+# MaxConnectionsPerChild: maximum number of connections a server process serves
+#                         before terminating
+<IfModule mpm_prefork_module>
+    StartServers             4
+    MinSpareServers          2
+    MaxSpareServers          5
+    MaxRequestWorkers      250
+    MaxConnectionsPerChild  50
+</IfModule>
+
+
+```
+
+> 附机器配置做参考：j3455+10G内存
+
+找到`httpd-default.conf`，修改KeepAlive设置
+
+```json
+KeepAlive On
+```
+
+重启Qapache与NextCloud使设置生效。
+
+##### 参考资料：
+
+>  [apache占用内存高解决办法](https://www.cnblogs.com/xiaoleiel/p/8308418.html)
+>
+> 我用512M的vps，访问量不大，但内存占用很大，甚至宕机。
+>
+> 我用top，然后shitf+m发现，httpd占用内存极大。经过网上找资料设置后，用过一段时间终于没再出现内存问题了。
+>
+> 首先查找配置文件的位置，可以用如下命令：
+>
+> find / -name httpd.conf
+> 找到配置文件/usr/local/apache/conf/extra/httpd-mpm.conf，修改设置Apache MPM Prefork模块
+>
+> StartServers 3
+> MinSpareServers 2
+> MaxSpareServers 5
+> ServerLimit 256
+> MaxClients 256
+> MaxRequestsPerChild 40
+>
+> 我原来的MaxRequestsPerChild是为0，问题应该在此。
+>
+> StartServers设置了服务器启动时建立的子进程数量
+> MinSpareservers和MaxSpareServers分别设置空闲子进程的最小和最大数量
+>
+> ServerLimit则是控制MaxClients所能使用的最大值。缩减MaxClients能让运行动态内容（比如：WordPress）的服务器有很大的改变。如果你的VPS遭遇到流量的大幅增加，而你的MaxClients设置的太高的话，你的服务器将会无限循环工作于从物理内存交换页面到虚拟内存中，最终导致宕机。一般计算适当的MaxClients值取决于你总共可用的系统内存除于每个Apache进程使用的内存。例如，如果你还有500MB的内存可用于Apache，每个Apache进程大约使用20MB的内存，你可以设置你的MaxClients为（512-12）/ 10 = 50（这个计算好像原文中有误）。使用命令top可以得到你VPS实时内存的使用。
+>
+> MaxRequestsPerChild这个指令设定一个独立的子进程将能处理的请求数量。在处理“MaxRequestsPerChild 数字”个请求之后，子进程将会被父进程终止，这时候子进程佔用的内存就会释放，如果再有访问请求，父进程会重新产生子进程进行处理。如果 MaxRequestsPerChild预设为0(无限)或较大的数字(例如10000以上)可以使每个子进程处理更多的请求，不会因为不断终止、启动子进程降低访问效率，但MaxRequestsPerChild设置为0时，如果佔用了200～300M内存，即使负载下来时佔用的内存也不会减少。内存较大的服务器可以设置为0或较大的数字。内存较小的服务器不妨设置成50、100、200，以防内存溢出。
+>
+> 找到配置文件/usr/local/apache/conf/extra/httpd-default.conf，修改KeepAlive设置
+>
+> ```
+> # Timeout: The number of seconds before receives and sends time out.#Timeout 30## KeepAlive: Whether or not to allow persistent connections (more than# one request per connection). Set to “Off” to deactivate.#KeepAlive On## MaxKeepAliveRequests: The maximum number of requests to allow# during a persistent connection. Set to 0 to allow an unlimited amount.# We recommend you leave this number high, for maximum performance.#MaxKeepAliveRequests 120## KeepAliveTimeout: Number of seconds to wait for the next request from the# same client on the same connection.#KeepAliveTimeout 5
+> ```
+>
+> Timeout是一个连接多少时间后断开，这个参数设置在30-60是一般的php程序都是适用的，至少要运行一些要占用大量时间的php程序，那么适当调高也是可以的，但请不要太高，否则会影响apache性能，本次优化我们使用30就很足够了。
+>
+> MaxKeepAliveRequests 是一个连接最大的请求量，对于页面有较多的图片等元素，可以适当调高一点，对于一般的网页设置在80-120是足够的，我们就设置为120，如果设置太高会导致httpd长时间不能退出释放内存的。
+>
+> KeepAliveTimeout 是当用户处理一次连接时，如果在该参数的时间内还有请求则会继续执行，不需要重新创建新的连接，直到达到MaxKeepAliveRequests的最大值才会退出。对于perfork模式下的，有人认为是将KeepAlive Off会比较好，但是对于绝大多数的网站都会不多不少有些图片元素，所以将该项打开，并将KeepTimeOut设置在2-5秒，不但有效提高服务器性能，也能加快页面打开速度。
+>
+> 如果还需要优化可以考虑修改启动的模块，Wordpress主要使用以下模块，保留这些其他的可以注释掉
+>
+> LoadModule authz_host_module modules/mod_authz_host.so
+> LoadModule log_config_module modules/mod_log_config.so
+> LoadModule expires_module modules/mod_expires.so
+> LoadModule deflate_module modules/mod_deflate.so
+> LoadModule headers_module modules/mod_headers.so
+> LoadModule setenvif_module modules/mod_setenvif.so
+> LoadModule mime_module modules/mod_mime.so
+> LoadModule autoindex_module modules/mod_autoindex.so
+> LoadModule dir_module modules/mod_dir.so
+> LoadModule alias_module modules/mod_alias.so
+> LoadModule rewrite_module modules/mod_rewrite.so
+> LoadModule negotiation_module modules/mod_negotiation.so
+
+### 3. 使用Docker安装NextCloud
 
 引自[Verne](https://blog.einverne.info/post/2018/06/qnap-file-sync.html)
 
@@ -249,6 +410,10 @@ docker run -d \
 > ```
 >
 > 确保 `/share/NextCloud` 也就是 NextCloud 共享文件夹以及创建
+
+
+
+------
 
 
 
