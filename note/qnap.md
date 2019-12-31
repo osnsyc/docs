@@ -208,11 +208,14 @@ docker run -d \
 
 ### 2. 应用商店NextCloud
 
+- [Apache73](https://cdn.qnapclub.eu/qpkg_artifacts/apache73_2441.7313_x86_64/apache73_2441.7313_x86_64.qpkg) ： https://www.qnapclub.eu/en/qpkg/735
+- [nextcloud73](https://www.qnapclub.eu/en/qpkg/750)
+
 #### 安装步骤简述如下：
 
-- 手动安装nextcloud.qpkg与Qapache
+- 手动安装nextcloud73与Apache73
 
-- 开启qapache与NextCloud应用
+- 开启Apache与NextCloud应用
 
 - 填写管理员并配置数据库
 
@@ -258,9 +261,9 @@ $CONFIG = array (
 );
 ```
 
-#### 配置Qapache
+#### 配置Apache
 
-使用一段时间后发现NexctCloud占用内存极大，貌似无法正常释放内存，修改Qapache解决
+使用一段时间后发现NexctCloud占用内存极大，貌似无法正常释放内存，修改apache配置解决
 
 使用`find / -name 'http.conf'`找到NextCloud的配置文件（`/share/CACHEDEV1_DATA/.qpkg/NextCloud/httpd.conf`）做如下编辑：
 
@@ -275,7 +278,7 @@ Include etc/extra/httpd-mpm.conf
 #开启MPM模块
 ```
 
-使用`find / -name 'http-mpm.conf'`找到Qapache的配置文件（`/share/CACHEDEV1_DATA/.qpkg/Qapache/etc/extra/httpd-mpm.conf`）做如下编辑：
+使用`find / -name 'http-mpm.conf'`找到apache的配置文件（`/share/CACHEDEV1_DATA/.qpkg/Qapache/etc/extra/httpd-mpm.conf`）做如下编辑：
 
 ```json
 # prefork MPM
