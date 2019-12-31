@@ -7,11 +7,14 @@
   - [<span class="iconfont icon-mix"></span> 待开发](note/mixin.md)
   - [<span class="iconfont icon-plugin"></span> 待开发](note/plugin.md)
 - <span class="iconfont icon-crown"></span> 阅读
+  
   - [<span class="iconfont icon-satellite"></span> 积极心理学](note/积极心理学.md)
   - [<span class="iconfont icon-router"></span> 待开发](note/router.md)
   - [<span class="iconfont icon-alert"></span> 待开发](note/ui-feedback.md)
 - <span class="iconfont icon-factory"></span> 杂物
   - [<span class="iconfont icon-file"></span> Camera Exposure](note/camera_exposure.md)
+  - [<span class="iconfont icon-file"></span> Linux 命令笔记](note/linux.md)
   - [<span class="iconfont icon-pack"></span> docsify](note/readme.md)
 - <span class="iconfont icon-magic"></span> 还有更多
+  
   - [<span class="iconfont icon-nut"></span> 待开发](note/examples.md)
