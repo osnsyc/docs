@@ -221,6 +221,18 @@ docker run -d \
 
 - > 选择使用 NAS 宿主机的 SQL 服务，可以方便的使用 phpMyAdmin 来管理。NAS 上 MySQL 服务端口在 应用服务 设置栏可以找到
 
+  
+
+  ```
+  mysql -uroot -p
+  Then a mysql> or MariaDB [root]> prompt will appear. Now enter the following lines and confirm them with the enter key:
+  
+  CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
+  CREATE DATABASE IF NOT EXISTS nextcloud;
+  GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES ON nextcloud.* TO 'username'@'localhost' IDENTIFIED BY 'password';
+  FLUSH privileges;
+  ```
+
 #### 安全及设置警告
 
 在 `用户名 - 管理 - 概览`  下运行安全检查，并作相应的设置
@@ -278,7 +290,7 @@ Include etc/extra/httpd-mpm.conf
 #开启MPM模块
 ```
 
-使用`find / -name 'http-mpm.conf'`找到apache的配置文件（`/share/CACHEDEV1_DATA/.qpkg/Qapache/etc/extra/httpd-mpm.conf`）做如下编辑：
+使用`find / -name 'http-mpm.conf'`找到apache的配置文件（`、`）做如下编辑：
 
 ```json
 # prefork MPM
