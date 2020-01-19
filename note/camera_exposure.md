@@ -208,3 +208,5 @@
   As an example, [DJI's Zenmuse X3](http://www.dji.com/inspire-1/camera#x3) camera has a diagonal field of view of 94°, which is equivalent to a 20mm focal length when using a 35mm sensor. Note, the X3 sensor is smaller than 35mm, and so the physical focal length is also smaller.
 
   A diagonal field of view can be deconstructed to its horizontal and vertical components by using the aspect ratio of the sensor. X3 has a 4000x3000 pixel sensor, and so the horizontal and vertical field of views are 84° and 62° respectively.
+
+![img](camera_exposure.assets/7acb0a46f21fbe09636ac06e6c600c338744ad97.jpg)

@@ -9,7 +9,7 @@
 - <span class="iconfont icon-crown"></span> 阅读
   
   - [<span class="iconfont icon-satellite"></span> 积极心理学](note/积极心理学.md)
-  - [<span class="iconfont icon-router"></span> 待开发](note/router.md)
+  - [<span class="iconfont icon-router"></span> 无人潜水器](note/autonomous_ocean_vehicles.md)
   - [<span class="iconfont icon-alert"></span> 待开发](note/ui-feedback.md)
 - <span class="iconfont icon-factory"></span> 杂物
   - [<span class="iconfont icon-file"></span> Camera Exposure](note/camera_exposure.md)
