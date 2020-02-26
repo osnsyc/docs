@@ -1,4 +1,6 @@
-# Linux创建应用图标及默认程序设置
+# Linux配置
+
+## Linux创建应用图标及默认程序设置
 
 在Linux中，通过软件市场等方式安装的应用，会默认创建好应用的快捷方式。
  但是对于自己下载的应用或者源码编译的应用，就需要自己创建应用图标。
@@ -47,7 +49,7 @@ MimeType  指定了文件的类型名称、描述、图标信息，同时通过�
 
 
 
-# Clash For Linux
+## Clash For Linux
 
 ### 下载
 
@@ -71,5 +73,73 @@ MimeType  指定了文件的类型名称、描述、图标信息，同时通过�
 
    
 
+## git最新版的安装
 
+You need to **add the Git Maintainers repository** in order to get the latest Git version.
+
+```shell
+sudo add-apt-repository ppa:git-core/ppa
+sudo apt-get update
+sudo apt-get install git
+```
+
+```shell
+git --version
+```
+It's **not always necessary to remove the existing Git before upgrading** it, but if you run into any problems, do the following and then repeat the steps mentioned above:
+
+```shell
+sudo apt-get remove git
+```
+
+
+
+## Chrome密码不同步
+
+关了Chrome
+
+`~/.config/google-chrome/Default`
+
+删掉里面的`Login Data`
+
+重开
+
+> mac 下该文件的路径是
+>
+>  `/Library/Application Support/Google/Chrome/Profile 1/Login Data`
+>
+> windows下是 `C:\Users\Administrator\AppData\Local\Google\Chrome\User Data\Default\Login Data`
+
+
+
+## VSCode
+
+### 安装
+
+```shell
+sudo add-apt-repository ppa:ubuntu-desktop/ubuntu-make
+sudo apt-get update
+sudo apt-get install ubuntu-make
+```
+
+```shell
+umake ide visual-studio-code
+```
+
+
+- 点击图标无法打开
+
+```shell
+cd ~/.config
+sudo rm -rf ./Code/
+```
+
+-  Visual Studio Code is unable to watch for file changes in this large workspace" (error ENOSPC)
+
+```shell
+cat /proc/sys/fs/inotify/max_user_watches
+sudo vi /etc/sysctl.conf
+#加入 fs.inotify.max_user_watches=524288
+sudo sysctl -p #生效
+```
 

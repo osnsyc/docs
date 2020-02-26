@@ -1,6 +1,6 @@
 - <span class="iconfont icon-atom"></span> 笔记
   - [<span class="iconfont icon-install"></span> C++PrimerPlus](program/cppprimerplus.md)
-  - [<span class="iconfont icon-wxapp"></span> 待开发](program/preparatory.md)
+  - [<span class="iconfont icon-wxapp"></span> gphoto](program/gphoto.md)
   - [<span class="iconfont icon-page"></span> 待开发](program/page.md)
   - [<span class="iconfont icon-component"></span> 待开发](program/component.md)
   - [<span class="iconfont icon-matrix"></span> 待开发](program/data.md)

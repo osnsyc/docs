@@ -14,7 +14,7 @@
 - <span class="iconfont icon-factory"></span> 杂物
   - [<span class="iconfont icon-file"></span> Camera Exposure](note/camera_exposure.md)
   - [<span class="iconfont icon-file"></span> Linux 命令笔记](note/linux_command_line.md)
-  - [<span class="iconfont icon-file"></span> Linux 折腾笔记](note/linux.md)
+  - [<span class="iconfont icon-file"></span> Linux 配置笔记](note/linux.md)
   - [<span class="iconfont icon-pack"></span> docsify](note/readme.md)
 - <span class="iconfont icon-magic"></span> 还有更多
 
