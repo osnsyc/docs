@@ -258,7 +258,10 @@ $CONFIG = array (
     2 => 'www.domain.com:xxx',
     3 => '192.168.2.1:xxx',
   ),
-  'datadirfctory' => '/share/CACHEDEV1_DATA/.qpkg/NextCloud/nextcloud/data',
+  'datadirfctory' => '/share/CACHEDEV1_DATA/.qpkg/NextCloud/data',
+    
+ # 推荐修改默认datadirfctory至nextcloud文件夹外，方便日后的升级
+    
   'dbtype' => 'mysql',
   'version' => '17.0.1.1',
   'overwrite.cli.url' => 'http://192.168.3.103:xxx',
@@ -377,6 +380,8 @@ KeepAlive On
 > LoadModule rewrite_module modules/mod_rewrite.so
 > LoadModule negotiation_module modules/mod_negotiation.so
 
+
+
 ### 3. 使用Docker安装NextCloud
 
 引自[Verne](https://blog.einverne.info/post/2018/06/qnap-file-sync.html)
@@ -425,6 +430,41 @@ KeepAlive On
 > ```
 >
 > 确保 `/share/NextCloud` 也就是 NextCloud 共享文件夹以及创建
+
+
+
+### 4. NextCloud的手动升级
+
+WEB端自动升级时，升级包因网络问题无法完成下载，故手动升级。
+
+#### 关闭NextCloud服务
+
+#### 备份
+
+将`/nextcloud`文件夹重命名为`/nextcloud-old`
+
+```shell
+cd /share/CACHEDEV1_DATA/.qpkg/NextCloud/
+mv nextcloud nextcloud-old
+```
+
+#### 下载更新
+
+下载并解压升级包至`/NextCloud`文件夹下
+
+```shell
+unzip nextcloud-[version].zip
+```
+
+#### 安装更新
+
+将`/nextcloud-old`中的`config/config.php`拷贝至新的`/nextcloud`文件夹对应目录下
+
+启动nextcloud服务，网页弹出升级界面，点击升级即可。
+
+> 官方参考文档
+>
+> https://docs.nextcloud.com/server/latest/admin_manual/maintenance/manual_upgrade.html
 
 
 
