@@ -239,7 +239,15 @@ docker run -d \
 
 ![image-20191226172011934](qnap.assets/image-20191226172011934.png)
 
+**内存缓存配置**
 
+路径`/usr/local/mysql`下`my.cnf`
+
+```
+[mysqld]
+innodb_buffer_pool_size=1G
+innodb_io_capacity=4000
+```
 
 #### 添加信任域名
 
