@@ -65,3 +65,8 @@ qDebug() << "color: " << color;
 - 应用程序销毁窗口部件时会自动销毁子部件，若不是顶层窗口，则只是隐藏；
 - QT可重定义父部件，如使用布局管理器时；
 
+#### 发布release版本
+
+- 将`build-xxx-release`目录内可执行文件`.exe`拷贝出；
+- 运行 `Qt xxx (MinGW xxx 64-bit)`->`cd path`进入`.exe`路径；
+- 执行`windeployqt xxx.exe`
